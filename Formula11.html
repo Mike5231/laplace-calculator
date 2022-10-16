@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="./CSS/styleHome.css" rel="stylesheet"> 
+    <link href="./CSS/styles.css" rel="stylesheet"> 
+</head>
+<body id="contenido">
+   <div id="div1">
+    <div id="div2">
+        <h1>Formula de Laplace</h1>
+    <img src="./img/formula9.png" alt="" width="250px" height="100px">
+        <div id="div5">
+            <label for="a" class="titleLogin">Ingrese a: </label>
+            <input id = "XD" type="text" min="0" name="n"></input>
+            <a id ="buto1"class="btn btn-primary loginbutton">Resolver</a>
+        </div>
+    </div>
+   </div>
+    <div id="div3">
+        <div id="div4">
+            <h1>Resultado:</h1>
+            <h2 id="total"></h2>
+        </div>
+    </div>
+</body>
+<!--Jquery-->
+<script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+<script>
+    let total = 0;
+    $('#buto1').click(function() {
+        var id = $("#XD").val()
+        if (id.includes('sqrt')) {
+            let raiz = id.split('')
+            console.log(raiz)
+            removeItemFromArr(raiz, 's');
+            removeItemFromArr(raiz, 'q');
+            removeItemFromArr(raiz, 'r');
+            removeItemFromArr(raiz, 't');
+            removeItemFromArr(raiz, '(');
+            removeItemFromArr(raiz, ')');
+            console.log(raiz);
+            console.log(raiz.join(''));
+            const aux = Math.sqrt(parseInt(raiz.join('')));
+                $("#total").html(
+                '<div class="fraction"><span class="fup" id="total"><i>S^2 + '+parseInt(raiz.join(''))+'</i></span>'
+                +'<span class="bar">/</span>'
+                +'<span class="fdn"><i>(S^2 - '+ parseInt(raiz.join('')) +')^2</i></span></div>')
+            console.log(aux)
+            } else if (id.includes('/')) {
+            let pene = id.split('/')
+            let aux = pene[0] / pene[1];
+            if (aux % 1 == 0) {
+                total = aux;
+                $("#total").html(
+                        '<div class="fraction"><span class="fup" id="total"><i>S^2 + '+ total * total+'</i></span>'
+                        +'<span class="bar">/</span>'
+                        +'<span class="fdn"><i>(S^2 - '+ total * total +')^2</i></span></div>')
+                } else {
+                let fraccion = 
+                    '<div class="fraction"><span class="fup" id="total"><i>'+pene[0]+'</i></span>'
+                    +'<span class="bar">/</span>'
+                    +'<span class="fdn"><i>'+pene[1]+'</i></span></div>'
+                    $("#total").html(
+                        '<div class="fraction"><span class="fup" id="total"><i>S^2 + ('+fraccion+')^2</i></span>'
+                        +'<span class="bar">/</span>'
+                        +'<span class="fdn"><i>(S^2 - ('+ fraccion +'))^2</i></span></div>')
+                }
+            } else if (id.includes('^')) {
+            let elevar = id.split("^")
+            let total = Math.pow(elevar[0], elevar[1])
+            $("#total").html(
+                '<div class="fraction"><span class="fup" id="total"><i>S^2 + '+ total * total+'</i></span>'
+                +'<span class="bar">/</span>'
+                +'<span class="fdn"><i>(S^2 - '+ total * total +')^2</i></span></div>')
+            } else {
+            total = id;
+            $("#total").html(
+                '<div class="fraction"><span class="fup" id="total"><i>S^2 + '+ total * total+'</i></span>'
+                +'<span class="bar">/</span>'
+                +'<span class="fdn"><i>(S^2 - '+ total * total +')^2</i></span></div>')
+        }
+        })
+        function removeItemFromArr(arr, item) {
+            var i = arr.indexOf(item);
+            if (i !== -1) {
+                arr.splice(i, 1);
+            }
+    }
+</script>
+</html>
